@@ -2,118 +2,78 @@ package com.bl;
 
 public class BinarySearchTree 
 {
-	// Java code to add all greater values to
-	// every node in a given BST
-	 
-	// A binary tree node
-	
-	 
-	    // Root of BST
-	    Node root;
-	 
-	    // Constructor
-	    BinarySearchTree()
-	    {
-	        root = null;
-	    }
-	 
-	    // Inorder traversal of the tree
-	    void inorder()
-	    {
-	        inorderUtil(this.root);
-	    }
-	 
-	    // Utility function for inorder traversal of
-	    // the tree
-	    void inorderUtil(Node node)
-	    {
-	        if (node == null)
-	            return;
-	 
-	        inorderUtil(node.left);
-	        System.out.print(node.data + " ");
-	        inorderUtil(node.right);
-	    }
-	 
-	    // adding new node
-	    public void insert(int data)
-	    {
-	        this.root = this.insertRec(this.root, data);
-	    }
-	 
-	    /* A utility function to insert a new node with
-	    given data in BST */
-	    Node insertRec(Node node, int data)
-	    {
-	        /* If the tree is empty, return a new node */
-	        if (node == null) {
-	            this.root = new Node(data);
-	            return this.root;
-	        }
-	 
-	        /* Otherwise, recur down the tree */
-	        if (data <= node.data) {
-	            node.left = this.insertRec(node.left, data);
-	        }
-	        else {
-	            node.right = this.insertRec(node.right, data);
-	        }
-	        return node;
-	    }
-	 
-	    // This class initialises the value of sum to 0
-	     class Sum {
-	        int sum = 0;
-	    }
-	 
-	    // Recursive function to add all greater values in
-	    // every node
-	    void modifyBSTUtil(Node node, Sum S)
-	    {
-	        // Base Case
-	        if (node == null)
-	            return;
-	 
-	        // Recur for right subtree
-	        this.modifyBSTUtil(node.right, S);
-	 
-	        // Now *sum has sum of nodes in right subtree, add
-	        // root->data to sum and update root->data
-	        S.sum = S.sum + node.data;
-	        node.data = S.sum;
-	 
-	        // Recur for left subtree
-	        this.modifyBSTUtil(node.left, S);
-	    }
-	 
-	    // A wrapper over modifyBSTUtil()
-	    void modifyBST(Node node)
-	    {
-	        Sum S = new Sum();
-	        this.modifyBSTUtil(node, S);
-	    }
-	 
-	    // Driver Function
-	    public static void main(String[] args)
-	    {
-	        BinarySearchTree tree = new BinarySearchTree();
-	 
-	        /* Let us create following BST
-	              50
-	           /     \
-	          30      70
-	         */
-	 
-	        tree.insert(56);
-	        tree.insert(30);        
-	        tree.insert(70);
-	       
-	       
-	 
-	        // print in order traversal of the modified BST
-	        tree.inorder();
-	    }
+
+	/**
+	 * creating method insert to inserting the node to the BST
+	 * 
+	 * @param root-          root will be the type of left, right and center
+	 * @param val-represents value
+	 * @return to create NewNode
+	 */
+
+	/*
+	 * 1. checking conditions by taking if else statement check first condition- if
+	 * root is null then it will return to createnewNode and insert the new value
+	 */
+
+	public Node insert(Node root, int val) {
+		if (root == null) {
+			return craeteNewNode(val);
+		}
+		/*
+		 * 2. condition second if value is lesser then root data value then it will
+		 * inserting a root value to the left side
+		 */
+		if (val < root.data) {
+			root.left = insert(root.left, val);
+		}
+
+		/*
+		 * 3. condition third if value is greater then root data value then it will
+		 * inserting a root value to the right side
+		 */
+		else if (val > root.data) {
+
+			root.right = insert(root.right, val);
+		}
+		return root;
+
 	}
+
+	/**
+	 * create a method name as createNewNode and passing parameter k in int type
+	 * 
+	 * @param k-data to be assigned to k parameter
+	 * @return
+	 */
+	public Node craeteNewNode(int k)
+	{
+		Node bst = new Node();
+		bst.data = k;
+		/*
+		 * both left and right root data's are null
+		 */
+		bst.left = null;
+		bst.right = null;
+		return bst;
+	}
+
+	/**
+	 * creating method print to print the data values
+	 * 
+	 * @param root- parameter is root
+	 */
+	public void print(Node root) {
+		if (root == null) {
+			return;
+		}
+		print(root.left);
+		System.out.println(root.data);
+		print(root.right);
+
+	}
+
+}
 	 
 
 class Node {
@@ -121,9 +81,10 @@ class Node {
     int data;
     Node left, right;
  
-    Node(int d)
+    Node()
     {
-        data = d;
+        int d = 0;
+		data = d;
         left = right = null;
     }
 }
